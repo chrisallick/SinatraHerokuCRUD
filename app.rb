@@ -1,8 +1,7 @@
-require 'rubygems'
 require 'sinatra'
-require 'erb'
+require 'sinatra/partial'
+require 'sinatra/reloader' if development?
 require 'redis'
-require 'json'
 
 configure do
     redisUri = ENV["REDISTOGO_URL"] || 'redis://localhost:6379'
@@ -11,10 +10,10 @@ configure do
 end
 
 get '/' do
-	$redis.lpush("dope", "nachos")
-  	erb :index, :locals => {
-  		:dump => $redis.get("dope")
-  	}
+    $redis.set("dope", "nachos")
+    erb :main, :locals => {
+        :dump => $redis.get("dope")
+    }
 end
 
 get '/messages' do

@@ -1,3 +1,6 @@
-source :gemcutter
-gem 'sinatra', '1.2.6'
-gem 'redis', '2.2.0'
+source :rubygems
+gem "sinatra", :require => "sinatra/base"
+gem "sinatra-reloader"
+gem "sinatra-partial"
+gem "json"
+gem "redis"
