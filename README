@@ -1,5 +1,19 @@
-This is a template app using Sinatra, Ruby, and Redis that is ready for deployment on Heroku.
+Sinatra CRUD without the "update"
 
-Once you have the template, follow the steps below to get the final touches to get your app ready for deploying to Heroku.
+Test:
+$> bundle install
+$> rackup
 
+go to http://localhost:9292/
+
+you should see "nachos"
+coolbeans, redis/sinatra are working
+
+* optional (but i do it everytime)
+
+Heroku:
+$> heroku create
+$> heroku addons:add redistogo
+*$> heroku apps:rename enter_new_name
+$> git push heroku master
 
