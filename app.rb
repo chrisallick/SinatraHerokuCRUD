@@ -18,48 +18,29 @@ end
 
 get '/messages' do
     content_type :json
-    
+
     messages = []
-    all = $redis.lrange("messages", 0, $redis.llen("messages"))
-    all.each do |message|
-        messages.push( message )
+    $redis.smembers("messages").each do |id|
+        messages.push( $redis.hgetall("message:#{id}") )
     end
+
     { :result => "success", :messages => messages }.to_json
 end
 
 post '/message' do
+    content_type :json
+    
     message = params[:message]
-
     if message  
-        $redis.lpush( "messages", message )
-        { :result => "success" }.to_json
+        id = $redis.incr(:sequence_counter)
+        time = Time.now
+        time = time.strftime("%B %d, %Y")
+        
+        $redis.hmset("message:#{id}", "message", message, "time", time, "id", id )
+        $redis.sadd("messages", id)
+        
+        { :result => "success", :id => id }.to_json
     else
-        { :result => "fail", :msg => "invalid params" }.to_json
-    end
-end
-
-# put '/message' do
-#     message = params[:message]
-
-#     if message
-#         all = $redis.lrange("messages", 0, $redis.llen("messages"))
-#         all.each do |_message|
-#             if message == _message
-#                 #_message = message
-#             end
-#         { :result => "success" }.to_json
-#     else
-#         { :result => "fail" }.to_json
-#     end
-# end
-
-delete '/message' do
-    message = params[:message]
-
-    if message
-        $redis.lrem("message",0,message)
-        { :result => "success" }.to_json
-    else
-        { :result => "fail" }.to_json
+        { :result => "fail", :error => "invalid params" }.to_json
     end
 end
