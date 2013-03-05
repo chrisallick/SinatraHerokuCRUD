@@ -17,6 +17,8 @@ get '/' do
 end
 
 get '/messages' do
+    content_type :json
+    
     messages = []
     all = $redis.lrange("messages", 0, $redis.llen("messages"))
     all.each do |message|
