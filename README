@@ -16,4 +16,7 @@ $> heroku create
 $> heroku addons:add redistogo
 *$> heroku apps:rename enter_new_name
 $> git push heroku master
+$> heroku open
 
+you should see "nachos"
+dope nachos, heroku/redis/sinatra are working
