@@ -1,7 +1,6 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    json (1.7.6)
     rack (1.4.1)
     redis (2.2.0)
     sinatra (1.2.6)
@@ -13,6 +12,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  json
   redis (= 2.2.0)
   sinatra (= 1.2.6)

@@ -1,5 +1,11 @@
 Sinatra CRUD without the "update"
 
+The inspiration for this project:
+
+1) i needed it
+2) it serves as a great excersise to illustrate the motivation for using Rails
+3) if all you need is to push a static/key-value micro-site you're good to go.
+
 Test:
 $> bundle install
 $> rackup
@@ -20,3 +26,6 @@ $> heroku open
 
 you should see "nachos"
 dope nachos, heroku/redis/sinatra are working
+
+Is this all wrong?
+chrisallick@gmail.com

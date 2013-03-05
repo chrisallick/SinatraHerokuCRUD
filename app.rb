@@ -2,22 +2,22 @@ require 'rubygems'
 require 'sinatra'
 require 'erb'
 require 'redis'
+require 'json'
 
 configure do
     redisUri = ENV["REDISTOGO_URL"] || 'redis://localhost:6379'
     uri = URI.parse(redisUri) 
-    REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+    $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 end
 
 get '/' do
-	REDIS.set("dope", "nachos")
+	$redis.lpush("dope", "nachos")
   	erb :index, :locals => {
-  		:dump => REDIS.get("dope")
+  		:dump => $redis.get("dope")
   	}
 end
 
 get '/messages' do
-    auth = params[:secret]
     messages = []
     all = $redis.lrange("messages", 0, $redis.llen("messages"))
     all.each do |message|
